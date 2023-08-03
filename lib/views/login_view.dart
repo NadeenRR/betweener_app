@@ -1,13 +1,16 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tt9_betweener_challenge/assets.dart';
+import 'package:tt9_betweener_challenge/models/user.dart';
 import 'package:tt9_betweener_challenge/views/main_app_view.dart';
 import 'package:tt9_betweener_challenge/views/register_view.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
 import 'package:tt9_betweener_challenge/views/widgets/primary_outlined_button_widget.dart';
 import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
 
+import '../controllers/auth_cont.dart';
 import 'widgets/google_button_widget.dart';
 
 class LoginView extends StatefulWidget {
@@ -23,6 +26,31 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  void submitLogin() async {
+    if (_formKey.currentState!.validate()) {
+      final body = {
+        "email": emailController.text,
+        "password": passwordController.text,
+      };
+      login(body).then((user) async {
+        // save user local
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user', userToJson(user));
+
+        if (mounted) {
+          Navigator.pushNamed(context, MainAppView.id);
+        }
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(error.toString()),
+          backgroundColor: Colors.red,
+        ));
+      });
+
+      //    Navigator.pushNamed(context, MainAppView.id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +105,7 @@ class _LoginViewState extends State<LoginView> {
                   const SizedBox(
                     height: 24,
                   ),
-                  SecondaryButtonWidget(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.pushNamed(context, MainAppView.id);
-                        }
-                      },
-                      text: 'LOGIN'),
+                  SecondaryButtonWidget(onTap: submitLogin, text: 'LOGIN'),
                   const SizedBox(
                     height: 24,
                   ),
