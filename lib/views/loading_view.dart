@@ -16,15 +16,21 @@ class _LoadingViewState extends State<LoadingView> {
   void checkLogin() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey('user') && mounted) {
+      print('cc');
       Navigator.pushNamed(context, MainAppView.id);
     } else {
+      print('ll');
+
       Navigator.pushNamed(context, LoginView.id);
     }
   }
 
   @override
   void initState() {
+    print('not');
     checkLogin();
+    print('login');
+
     super.initState();
   }
 

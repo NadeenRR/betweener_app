@@ -27,28 +27,54 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void submitLogin() async {
+  // void submitLogin() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     final body = {
+  //       "email": emailController.text,
+  //       "password": passwordController.text,
+  //     };
+  //     login(body).then((user) async {
+  //       // save user local
+  //       final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //       await prefs.setString('user', userToJson(user));
+  //       if (mounted) {
+  //         Navigator.pushNamed(context, MainAppView.id);
+
+  //       }
+  //     }).catchError((error) {
+  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //         content: Text(error.toString()),
+  //         backgroundColor: Colors.red,
+  //       ));
+  //     });
+
+  //     //    Navigator.pushNamed(context, MainAppView.id);
+  //   }
+  // }
+
+  void submitLogin() {
     if (_formKey.currentState!.validate()) {
       final body = {
-        "email": emailController.text,
-        "password": passwordController.text,
+        'email': emailController.text,
+        'password': passwordController.text
       };
+
       login(body).then((user) async {
-        // save user local
+        //save user locally
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('user', userToJson(user));
 
         if (mounted) {
           Navigator.pushNamed(context, MainAppView.id);
         }
-      }).catchError((error) {
+      }).catchError((err) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(error.toString()),
+          content: Text(err.toString()),
           backgroundColor: Colors.red,
         ));
       });
 
-      //    Navigator.pushNamed(context, MainAppView.id);
+      // Navigator.pushNamed(context, MainAppView.id);
     }
   }
 

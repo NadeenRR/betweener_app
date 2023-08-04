@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final Iterable<String>? autofillHints;
+  final Function(String)? onChange;
   const CustomTextFormField(
       {super.key,
       required this.label,
@@ -17,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
       this.password = false,
       this.keyboardType,
       this.validator,
-      this.autofillHints});
+      this.autofillHints, this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class CustomTextFormField extends StatelessWidget {
           validator: validator,
           autofillHints: autofillHints,
           obscureText: password,
+          onChanged: onChange,
           enableSuggestions: password == true ? false : true,
           autocorrect: password == true ? false : true,
           decoration: InputDecoration(

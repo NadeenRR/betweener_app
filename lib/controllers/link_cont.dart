@@ -14,14 +14,11 @@ Future<List<Links>> getLinks(context) async {
 
   User user = userFromJson(prefs.getString('user')!);
 
-  print('aaaa');
   print(user.token);
   final response = await http.get(Uri.parse(linkUrl),
       headers: {'Authorization': 'Bearer ${user.token}'});
 
   print(response.body);
-
-  print('eeee');
 
   // print(jsonDecode(response.body)['links']);
 

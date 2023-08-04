@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/search_view.dart';
-import 'package:tt9_betweener_challenge/views/widgets/add_link.dart';
+import 'package:tt9_betweener_challenge/views/add_link.dart';
 
 import '../constants.dart';
 import '../controllers/link_cont.dart';
@@ -24,9 +24,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     user = getLocalUser();
-    print('jjjjjjj');
     links = getLinks(context);
-    print('sssssss');
     super.initState();
   }
 

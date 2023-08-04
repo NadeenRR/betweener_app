@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
 
-import '../../controllers/link_cont.dart';
-import 'custom_text_form_field.dart';
+import '../controllers/link_cont.dart';
+import 'widgets/custom_text_form_field.dart';
 
 class AddNewLink extends StatefulWidget {
   static String id = '/newLink';

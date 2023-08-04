@@ -5,6 +5,7 @@ const baseUrl = 'http://www.osamapro.online/api';
 const loginUrl = '$baseUrl/login';
 const linkUrl = '$baseUrl/links';
 const followUrl = '$baseUrl/follow';
+const searchUrl = '$baseUrl/search';
 
 // ============= STYLE CONSTS ==============
 
