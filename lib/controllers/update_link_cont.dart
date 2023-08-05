@@ -10,11 +10,12 @@ Future<bool> updateLink(Map<String, String> body, id) async {
   var user = userFromJson(prefs.getString('user')!);
 
   final response = await http.put(
-      Uri.parse('https://www.osamapro.online/api/links/$id'),
-      headers: {'Authorization': 'Bearer ${user.token}'},
-      body: body);
+    Uri.parse('https://www.osamapro.online/api/links/$id'),
+    headers: {'Authorization': 'Bearer ${user.token}'},
+    body: body,
+  );
 
- // print(response.statusCode);
+  // print(response.statusCode);
 
   if (response.statusCode == 200) {
     return true;

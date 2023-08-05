@@ -125,7 +125,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
-                                        'follow: ${snapshot.data!.followingCount}'),
+                                        'followers: ${snapshot.data!.followingCount}'),
                                   ),
                                   const SizedBox(
                                     width: 8,
@@ -185,7 +185,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   icon: Icons.edit,
                                   backgroundColor: const Color(0xffFFD465),
                                   borderRadius: BorderRadius.circular(15),
-                                  padding: const EdgeInsets.all(8),
+                                  //   padding: const EdgeInsets.all(8),
                                 ),
                                 const SizedBox(
                                   width: 8,
@@ -204,7 +204,8 @@ class _ProfileViewState extends State<ProfileView> {
                                   icon: Icons.delete_outline_outlined,
                                   backgroundColor: const Color(0xffF56C61),
                                   borderRadius: BorderRadius.circular(15),
-                                  padding: const EdgeInsets.all(8),
+
+                                  //  padding: const EdgeInsets.all(8),
                                 ),
                               ],
                             ),
@@ -222,9 +223,9 @@ class _ProfileViewState extends State<ProfileView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    snapshot.data![index].title!,
+                                    snapshot.data![index].title!.toUpperCase(),
                                     style: TextStyle(
-                                      letterSpacing: 2,
+                                      letterSpacing: 3,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20,
                                       color: index % 2 == 0
@@ -233,7 +234,7 @@ class _ProfileViewState extends State<ProfileView> {
                                     ),
                                   ),
                                   Text(
-                                    '${snapshot.data?[index].link}',
+                                    '${snapshot.data![index].link}',
                                     style: TextStyle(
                                       color: index % 2 == 0
                                           ? const Color(0xff9B6A73)

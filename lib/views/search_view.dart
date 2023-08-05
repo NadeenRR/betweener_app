@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
+import '../constants.dart';
+import '../controllers/follow_cont.dart';
 import '../controllers/search_cont.dart';
 import '../models/search.dart';
 
@@ -22,6 +24,8 @@ class _SearchViewState extends State<SearchView> {
 
     return searchUsersByName(searchParams);
   }
+
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +66,60 @@ class _SearchViewState extends State<SearchView> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(
-                      child: Text(
-                          'Error: ${snapshot.error}')); 
-                } else if (!snapshot.hasData) {
-                  return const Center(child: Text('No data found.'));
+                }
+                // else if (snapshot.hasError) {
+                //   return Center(
+                //       child: Text(
+                //           'Error: ${snapshot.error}'));
+                // }
+                else if (!snapshot.hasData) {
+                  return const Center(child: Text(''));
                 } else {
                   Search searchResults = snapshot.data!;
-                  return ListView.builder(
+                  return ListView.separated(
                     itemCount: searchResults.user!.length,
+                    separatorBuilder: (context, index) => const Divider(),
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text('${snapshot.data!.user![index].name}'),
+                        trailing: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: isPressed
+                                  ? Colors.transparent
+                                  : kSecondaryColor,
+                              side: BorderSide(
+                                color: !isPressed
+                                    ? Colors.transparent
+                                    : kSecondaryColor,
+                              )),
+                          onPressed: () async {
+                            await addFollower({
+                              'followee_id': "${snapshot.data!.user![index].id}"
+                            });
+
+                            setState(() {
+                              isPressed = !isPressed;
+                            });
+                          },
+                          child: const Text(
+                            'Follow',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        title: Text(
+                          '${snapshot.data!.user![index].name}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                        subtitle: Text(
+                          '${snapshot.data!.user![index].email}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black38,
+                          ),
+                        ),
                       );
                     },
                   );

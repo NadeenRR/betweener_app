@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tt9_betweener_challenge/constants.dart';
 import 'package:tt9_betweener_challenge/models/search.dart';
 
 import '../models/user.dart' as userModel;

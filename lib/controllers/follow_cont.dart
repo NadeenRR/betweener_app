@@ -28,3 +28,18 @@ Future<Follow> getFollow(context) async {
 
   return Future.error('Somthing wrong');
 }
+
+Future<void> addFollower(Map body) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  User user = userFromJson(prefs.getString('user')!);
+
+  final response = await http.post(Uri.parse(followUrl),
+      body: body, headers: {'Authorization': 'Bearer ${user.token}'});
+
+  if (response.statusCode == 200) {
+    //print('${response.statusCode} ');
+  }
+
+  return Future.error('Somthing wrong');
+}

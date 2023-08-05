@@ -10,7 +10,6 @@ import '../../views/widgets/google_button_widget.dart';
 import '../controllers/auth_cont.dart';
 import '../models/user.dart';
 import 'loading_view.dart';
-import 'main_app_view.dart';
 
 class RegisterView extends StatefulWidget {
   static String id = '/registerView';
