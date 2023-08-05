@@ -7,7 +7,6 @@ import 'widgets/custom_text_form_field.dart';
 class AddNewLink extends StatefulWidget {
   static String id = '/newLink';
   const AddNewLink({super.key});
-  
 
   @override
   State<AddNewLink> createState() => _AddNewLinkState();
@@ -17,12 +16,14 @@ class _AddNewLinkState extends State<AddNewLink> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController linkController = TextEditingController();
+  TextEditingController userContoller = TextEditingController();
 
   void addlink() async {
     if (_formKey.currentState!.validate()) {
       final body = {
         "title": titleController.text,
         "link": linkController.text,
+        'username': userContoller.text
       };
       addNewlink(body).then((value) {}).catchError((err) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -79,13 +80,21 @@ class _AddNewLinkState extends State<AddNewLink> {
               CustomTextFormField(
                 controller: linkController,
                 hint: 'http:\\www.Example.com',
-                label: 'link',
+                label: 'link:',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'please enter the link';
                   }
                   return null;
                 },
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              CustomTextFormField(
+                controller: userContoller,
+                hint: '@nadeen',
+                label: 'User Name:',
               ),
               const SizedBox(
                 height: 24,

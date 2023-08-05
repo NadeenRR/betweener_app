@@ -42,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
                       return Text(
                         'Welcome ${snapshot.data!.user!.name}',
                         style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: kDefaultIconDarkColor,
                         ),

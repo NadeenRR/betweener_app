@@ -18,7 +18,7 @@ class _SearchViewState extends State<SearchView> {
   TextEditingController searchController = TextEditingController();
   late String searchQuery = '';
   Future<Search> search() async {
-    Map<String, dynamic> searchParams = {'query': searchQuery};
+    Map<String, dynamic> searchParams = {'name': searchQuery};
 
     return searchUsersByName(searchParams);
   }
@@ -65,7 +65,7 @@ class _SearchViewState extends State<SearchView> {
                 } else if (snapshot.hasError) {
                   return Center(
                       child: Text(
-                          'Error: ${snapshot.error}')); // Display the error message
+                          'Error: ${snapshot.error}')); 
                 } else if (!snapshot.hasData) {
                   return const Center(child: Text('No data found.'));
                 } else {
