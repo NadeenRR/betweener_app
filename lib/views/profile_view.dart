@@ -162,7 +162,7 @@ class _ProfileViewState extends State<ProfileView> {
                     child: ListView.separated(
                       padding: const EdgeInsets.only(top: 12, bottom: 12),
                       scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index){
                         if (snapshot.hasData) {
                           return Slidable(
                             endActionPane: ActionPane(
@@ -172,7 +172,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   width: 12,
                                 ),
                                 SlidableAction(
-                                  flex: 2,
+                                  //   flex: 2,
                                   onPressed: (context) async {
                                     await Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
@@ -185,13 +185,13 @@ class _ProfileViewState extends State<ProfileView> {
                                   icon: Icons.edit,
                                   backgroundColor: const Color(0xffFFD465),
                                   borderRadius: BorderRadius.circular(15),
-                                  //   padding: const EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(0),
                                 ),
                                 const SizedBox(
                                   width: 8,
                                 ),
                                 SlidableAction(
-                                  flex: 2,
+                                  //    flex: 2,
                                   autoClose: true,
                                   onPressed: (context) {
                                     deleteLink(snapshot.data?[index].id)
@@ -204,8 +204,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   icon: Icons.delete_outline_outlined,
                                   backgroundColor: const Color(0xffF56C61),
                                   borderRadius: BorderRadius.circular(15),
-
-                                  //  padding: const EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(0),
                                 ),
                               ],
                             ),
@@ -246,7 +245,6 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
                           );
                         }
-                        return null;
                       },
                       separatorBuilder: (context, index) {
                         return const SizedBox(
