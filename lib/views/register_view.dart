@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tt9_betweener_challenge/assets.dart';
-import 'package:tt9_betweener_challenge/views/login_view.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
 import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
 
 import '../../views/widgets/google_button_widget.dart';
 import '../controllers/auth_cont.dart';
-import '../models/register.dart';
+import '../models/user.dart';
+import 'loading_view.dart';
+import 'main_app_view.dart';
 
 class RegisterView extends StatefulWidget {
   static String id = '/registerView';
@@ -29,21 +30,21 @@ class _RegisterViewState extends State<RegisterView> {
 
   final _formKey = GlobalKey<FormState>();
 
-  void submitregister() {
+  void submitRegister() {
     if (_formKey.currentState!.validate()) {
       final body = {
         'name': nameController.text,
         'email': emailController.text,
-        'password': passwordController.text
+        'password': passwordController.text,
+        'password_confirmation': passwordController.text,
       };
 
       register(body).then((user) async {
         //save user locally
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('user', registerToJson(user));
-
+        await prefs.setString('user', userToJson(user));
         if (mounted) {
-          Navigator.pushNamed(context, LoginView.id);
+          Navigator.pushNamed(context, LoadingView.id);
         }
       }).catchError((err) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -51,8 +52,6 @@ class _RegisterViewState extends State<RegisterView> {
           backgroundColor: Colors.red,
         ));
       });
-
-      // Navigator.pushNamed(context, MainAppView.id);
     }
   }
 
@@ -137,7 +136,7 @@ class _RegisterViewState extends State<RegisterView> {
                     height: 24,
                   ),
                   SecondaryButtonWidget(
-                      onTap: submitregister, text: 'REGISTER'),
+                      onTap: submitRegister, text: 'REGISTER'),
                   const SizedBox(
                     height: 12,
                   ),

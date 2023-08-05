@@ -20,7 +20,6 @@ class _LoadingViewState extends State<LoadingView> {
       Navigator.pushNamed(context, MainAppView.id);
     } else {
       print('ll');
-
       Navigator.pushNamed(context, LoginView.id);
     }
   }
