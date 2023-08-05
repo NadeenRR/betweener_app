@@ -27,30 +27,6 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  // void submitLogin() async {
-  //   if (_formKey.currentState!.validate()) {
-  //     final body = {
-  //       "email": emailController.text,
-  //       "password": passwordController.text,
-  //     };
-  //     login(body).then((user) async {
-  //       // save user local
-  //       final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //       await prefs.setString('user', userToJson(user));
-  //       if (mounted) {
-  //         Navigator.pushNamed(context, MainAppView.id);
-
-  //       }
-  //     }).catchError((error) {
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //         content: Text(error.toString()),
-  //         backgroundColor: Colors.red,
-  //       ));
-  //     });
-
-  //     //    Navigator.pushNamed(context, MainAppView.id);
-  //   }
-  // }
 
   void submitLogin() {
     if (_formKey.currentState!.validate()) {
@@ -63,7 +39,6 @@ class _LoginViewState extends State<LoginView> {
         //save user locally
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('user', userToJson(user));
-
         if (mounted) {
           Navigator.pushNamed(context, MainAppView.id);
         }

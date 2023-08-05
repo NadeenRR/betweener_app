@@ -1,10 +1,15 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tt9_betweener_challenge/assets.dart';
+import 'package:tt9_betweener_challenge/views/login_view.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
 import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
 
 import '../../views/widgets/google_button_widget.dart';
+import '../controllers/auth_cont.dart';
+import '../models/register.dart';
 
 class RegisterView extends StatefulWidget {
   static String id = '/registerView';
@@ -23,6 +28,33 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  void submitregister() {
+    if (_formKey.currentState!.validate()) {
+      final body = {
+        'name': nameController.text,
+        'email': emailController.text,
+        'password': passwordController.text
+      };
+
+      register(body).then((user) async {
+        //save user locally
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user', registerToJson(user));
+
+        if (mounted) {
+          Navigator.pushNamed(context, LoginView.id);
+        }
+      }).catchError((err) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(err.toString()),
+          backgroundColor: Colors.red,
+        ));
+      });
+
+      // Navigator.pushNamed(context, MainAppView.id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +95,12 @@ class _RegisterViewState extends State<RegisterView> {
                     controller: nameController,
                     hint: 'John Doe',
                     label: 'Name',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please enter the name';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 14,
@@ -71,6 +109,14 @@ class _RegisterViewState extends State<RegisterView> {
                     controller: emailController,
                     hint: 'example@gmail.com',
                     label: 'Email',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please enter the email';
+                      } else if (!EmailValidator.validate(value)) {
+                        return 'please enter a valid email';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 14,
@@ -80,15 +126,18 @@ class _RegisterViewState extends State<RegisterView> {
                     hint: 'Enter password',
                     label: 'password',
                     password: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please enter the password';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 24,
                   ),
                   SecondaryButtonWidget(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {}
-                      },
-                      text: 'REGISTER'),
+                      onTap: submitregister, text: 'REGISTER'),
                   const SizedBox(
                     height: 12,
                   ),

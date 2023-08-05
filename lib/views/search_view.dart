@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
 import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
 
 import '../controllers/search_cont.dart';
 import '../models/search.dart';
-import '../models/user.dart';
 import 'main_app_view.dart';
 
 class SearchView extends StatefulWidget {

@@ -3,7 +3,6 @@ import 'package:tt9_betweener_challenge/views/home_view.dart';
 import 'package:tt9_betweener_challenge/views/loading_view.dart';
 import 'package:tt9_betweener_challenge/views/login_view.dart';
 import 'package:tt9_betweener_challenge/views/main_app_view.dart';
-import 'package:tt9_betweener_challenge/views/onbording_view.dart';
 import 'package:tt9_betweener_challenge/views/profile_view.dart';
 import 'package:tt9_betweener_challenge/views/receive_view.dart';
 import 'package:tt9_betweener_challenge/views/register_view.dart';
