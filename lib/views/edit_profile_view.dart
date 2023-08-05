@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
 
+import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
+
 class EditProfileView extends StatefulWidget {
   static const id = '/EditProfileView';
 
@@ -39,54 +41,19 @@ class _EditProfileViewState extends State<EditProfileView> {
             key: _formKey,
             child: Column(
               children: [
-                // const SizedBox(
-                //   height: 60,
-                // ),
-
                 CustomTextFormField(
                   controller: nameController,
                   hint: 'name',
                   label: 'Name',
                 ),
-                const SizedBox(height: 28),
+                const SizedBox(height: 22),
                 CustomTextFormField(
                   controller: emailController,
                   hint: 'email',
                   label: 'email',
                 ),
-                const SizedBox(height: 28),
-
-                const SizedBox(height: 28),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            15,
-                          ),
-                        ),
-                      ),
-                    ),
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                        vertical: 18,
-                        horizontal: 60,
-                      ),
-                    ),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color(0xffFFD465),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'ADD',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xff784E00),
-                    ),
-                  ),
-                ),
+                const SizedBox(height: 22),
+                SecondaryButtonWidget(onTap: () {}, text: 'Edit'),
               ],
             ),
           ),

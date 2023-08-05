@@ -13,32 +13,20 @@ class EditLinkView extends StatefulWidget {
 }
 
 class _EditLinkViewState extends State<EditLinkView> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _linkController = TextEditingController();
-  TextEditingController _userContoller = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController linkController = TextEditingController();
+  TextEditingController userContoller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  // Future<Link>? new_links;
-  // Link link = Link();
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _linkController.dispose();
-    super.dispose();
-  }
 
   Future<bool>? saveNewLink() {
     if (_formKey.currentState!.validate()) {
       final body = {
-        'title': _titleController.text,
-        'link': _linkController.text,
-        'user': _userContoller.text
+        'title': titleController.text,
+        'link': linkController.text,
+        'user': userContoller.text
       };
 
-      print(body['title']);
-      print(widget.idlink);
       updateLink(body, widget.idlink).then((link) async {
-        print(widget.idlink);
         await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
@@ -84,19 +72,19 @@ class _EditLinkViewState extends State<EditLinkView> {
                   height: 50,
                 ),
                 CustomTextFormField(
-                  controller: _titleController,
+                  controller: titleController,
                   hint: 'Snapchat',
                   label: 'title',
                 ),
                 const SizedBox(height: 28),
                 CustomTextFormField(
-                  controller: _linkController,
+                  controller: linkController,
                   hint: 'http:\\www.Example.com',
                   label: 'Link',
                 ),
                 const SizedBox(height: 28),
                 CustomTextFormField(
-                  controller: _userContoller,
+                  controller: userContoller,
                   hint: '@Rawnd',
                   label: 'User Name:',
                 ),

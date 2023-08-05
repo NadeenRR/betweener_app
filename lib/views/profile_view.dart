@@ -179,9 +179,6 @@ class _ProfileViewState extends State<ProfileView> {
                                     return EditLinkView(
                                         idlink: snapshot.data?[index].id);
                                   }));
-                                  // setState(() {
-                                  //   getLinks(context);
-                                  // });
                                 },
                                 foregroundColor: Colors.white,
                                 autoClose: true,
@@ -199,8 +196,6 @@ class _ProfileViewState extends State<ProfileView> {
                                 onPressed: (context) {
                                   deleteLink(snapshot.data?[index].id)
                                       .then((value) {
-                                    print('delte await');
-                                    print(links);
                                     setState(() {
                                       links = getLinks(context);
                                     });
