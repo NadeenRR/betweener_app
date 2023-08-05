@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
-import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
-
 import '../controllers/search_cont.dart';
 import '../models/search.dart';
-import 'main_app_view.dart';
 
 class SearchView extends StatefulWidget {
   static String id = '/searchView';
@@ -20,7 +17,7 @@ class _SearchViewState extends State<SearchView> {
 
   TextEditingController searchController = TextEditingController();
   late String searchQuery = '';
-  Future<Search> performSearch() async {
+  Future<Search> search() async {
     Map<String, dynamic> searchParams = {'query': searchQuery};
 
     return searchUsersByName(searchParams);
@@ -61,7 +58,7 @@ class _SearchViewState extends State<SearchView> {
           ),
           Expanded(
             child: FutureBuilder<Search>(
-              future: performSearch(),
+              future: search(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
