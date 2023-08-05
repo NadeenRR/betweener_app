@@ -19,33 +19,11 @@ class _SearchViewState extends State<SearchView> {
   Future<Search>? searchFuture;
 
   TextEditingController searchController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  Future<Search>? searchItem;
-  void search() {
-    if (_formKey.currentState!.validate()) {
-      final body = {
-        'name': searchController.text,
-      };
+  late String searchQuery = '';
+  Future<Search> performSearch() async {
+    Map<String, dynamic> searchParams = {'query': searchQuery};
 
-      searchUsersByName(body).then((user) async {
-        if (mounted) {
-          Navigator.pushNamed(context, MainAppView.id);
-        }
-      }).catchError((err) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(err.toString()),
-          backgroundColor: Colors.red,
-        ));
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    searchItem = searchUsersByName({
-      'name': searchController.text,
-    });
-    super.initState();
+    return searchUsersByName(searchParams);
   }
 
   @override
@@ -65,68 +43,49 @@ class _SearchViewState extends State<SearchView> {
               color: Colors.black,
             )),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: [
-              //   const Spacer(),
-              CustomTextFormField(
-                onChange: (query) {
-                  setState(() {});
-                },
-                controller: searchController,
-                hint: 'Search',
-                keyboardType: TextInputType.text,
-                autofillHints: const [AutofillHints.email],
-                label: 'search',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'search by name';
-                  }
-                  return null;
-                },
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              SecondaryButtonWidget(onTap: search, text: 'search'),
-
-              Expanded(
-                child: FutureBuilder<Search>(
-                  future: searchItem,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final searchResults = snapshot.data!.user;
-                      return ListView.builder(
-                        itemCount: searchResults!.length,
-                        itemBuilder: (context, index) {
-                          final user = searchResults[index];
-                          return ListTile(
-                            title: Text(user.name ?? ''),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: user.links!.map((link) {
-                                return Text('${link.title}: ${link.link}');
-                              }).toList(),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                    if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {}
-                    return const Text('loading');
-                  },
-                ),
-              ),
-            ],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: CustomTextFormField(
+              onChange: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
+              controller: searchController,
+              hint: 'Search',
+              keyboardType: TextInputType.text,
+              label: 'search',
+            ),
           ),
-        ),
+          Expanded(
+            child: FutureBuilder<Search>(
+              future: performSearch(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                      child: Text(
+                          'Error: ${snapshot.error}')); // Display the error message
+                } else if (!snapshot.hasData) {
+                  return const Center(child: Text('No data found.'));
+                } else {
+                  Search searchResults = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: searchResults.user!.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text('${snapshot.data!.user![index].name}'),
+                      );
+                    },
+                  );
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
