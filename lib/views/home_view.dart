@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/search_view.dart';
 import 'package:tt9_betweener_challenge/views/add_link.dart';
 
+import '../assets.dart';
 import '../constants.dart';
 import '../controllers/link_cont.dart';
 import '../controllers/user_cont.dart';
@@ -29,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 54),
+      padding: const EdgeInsets.only(left: 12, right: 12, top: 68, bottom: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,11 +41,11 @@ class _HomeViewState extends State<HomeView> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Text(
-                        'Welcome ${snapshot.data!.user!.name}',
+                        'Hello, ${snapshot.data!.user!.name}!',
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 22,
                           fontWeight: FontWeight.w500,
-                          color: kDefaultIconDarkColor,
+                          color: kPrimaryColor,
                         ),
                       );
                     }
@@ -62,10 +63,10 @@ class _HomeViewState extends State<HomeView> {
             ],
           ),
           const SizedBox(
-            height: 24,
+            height: 18,
           ),
           Image.asset(
-            'assets/imgs/qr_code.png',
+            AssetsData.qrImage,
             height: 420,
           ),
           FutureBuilder(
@@ -135,7 +136,7 @@ class _HomeViewState extends State<HomeView> {
                                           color: kOnSecondaryColor),
                                     ),
                                     Text(
-                                      '@ ${snapshot.data?[index].username}',
+                                      '@${snapshot.data?[index].username}',
                                       style: const TextStyle(
                                           color: kOnSecondaryColor),
                                     ),

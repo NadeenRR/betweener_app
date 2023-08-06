@@ -28,7 +28,7 @@ class Links {
   factory Links.fromJson(Map<String, dynamic> json) => Links(
         id: json["id"],
         title: json["title"],
-        link: json["Links"],
+        link: json["link"],
         username: json["username"],
         isActive: json["isActive"],
         userId: json["user_id"],
@@ -39,7 +39,7 @@ class Links {
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
-        "Links": Links,
+        "Links": link,
         "username": username,
         "isActive": isActive,
         "user_id": userId,

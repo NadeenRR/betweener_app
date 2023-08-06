@@ -4,6 +4,7 @@ import '../constants.dart';
 import '../controllers/follow_cont.dart';
 import '../controllers/search_cont.dart';
 import '../models/search.dart';
+import 'frindes_view.dart';
 
 class SearchView extends StatefulWidget {
   static String id = '/searchView';
@@ -80,44 +81,56 @@ class _SearchViewState extends State<SearchView> {
                     itemCount: searchResults.user!.length,
                     separatorBuilder: (context, index) => const Divider(),
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        trailing: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: isPressed
-                                  ? Colors.transparent
-                                  : kSecondaryColor,
-                              side: BorderSide(
-                                color: !isPressed
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FrindesView(
+                                  userInfo: snapshot.data!.user![index]),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          trailing: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: isPressed
                                     ? Colors.transparent
                                     : kSecondaryColor,
-                              )),
-                          onPressed: () async {
-                            await addFollower({
-                              'followee_id': "${snapshot.data!.user![index].id}"
-                            });
+                                side: BorderSide(
+                                  color: !isPressed
+                                      ? Colors.transparent
+                                      : kSecondaryColor,
+                                )),
+                            onPressed: () async {
+                              await addFollower({
+                                'followee_id':
+                                    "${snapshot.data!.user![index].id}"
+                              });
 
-                            setState(() {
-                              isPressed = !isPressed;
-                            });
-                          },
-                          child: const Text(
-                            'Follow',
-                            style: TextStyle(color: Colors.black),
+                              setState(() {
+                                isPressed = !isPressed;
+                              });
+                            },
+                            child: const Text(
+                              'Follow',
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
-                        ),
-                        title: Text(
-                          '${snapshot.data!.user![index].name}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
+                          title: Text(
+                            '${snapshot.data!.user![index].name}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          '${snapshot.data!.user![index].email}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black38,
+                          subtitle: Text(
+                            '${snapshot.data!.user![index].email}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black38,
+                            ),
                           ),
                         ),
                       );

@@ -53,7 +53,11 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.only(
+                bottom: 32,
+                left: 12,
+                right: 12,
+              ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
                 color: kPrimaryColor,
@@ -61,11 +65,12 @@ class _ProfileViewState extends State<ProfileView> {
               child:
                   Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                 IconButton(
+                    iconSize: 18,
                     onPressed: () async {
                       await Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return const EditProfileView();
-                      })).then((value) => null);
+                      })).then((value) {});
                     },
                     icon: const Icon(
                       Icons.edit_outlined,
@@ -73,16 +78,18 @@ class _ProfileViewState extends State<ProfileView> {
                       size: 28,
                     )),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const CircleAvatar(
                       radius: 50,
                       backgroundImage: NetworkImage(
-                          'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80'),
+                          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80'),
                     ),
                     const SizedBox(
-                      width: 12,
+                      width: 18,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FutureBuilder(
                           future: user,
@@ -92,25 +99,28 @@ class _ProfileViewState extends State<ProfileView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${snapshot.data!.user!.name}',
+                                    snapshot.data!.user!.name!.toUpperCase(),
                                     style: const TextStyle(
-                                        color: Colors.white, fontSize: 22),
+                                        color: Colors.white, fontSize: 20),
                                   ),
                                   Text(
                                     '${snapshot.data!.user!.email}',
                                     style: const TextStyle(
-                                        color: Colors.white, fontSize: 22),
+                                        color: Colors.white, fontSize: 18),
                                   ),
                                   Text(
-                                    '${snapshot.data!.user!.id}',
+                                    "+9701234567".toUpperCase(),
                                     style: const TextStyle(
-                                        color: Colors.white, fontSize: 22),
+                                        color: Colors.white, fontSize: 18),
                                   ),
                                 ],
                               );
                             }
                             return const Text('loading....');
                           },
+                        ),
+                        const SizedBox(
+                          height: 12,
                         ),
                         FutureBuilder(
                           future: follow,
@@ -162,7 +172,7 @@ class _ProfileViewState extends State<ProfileView> {
                     child: ListView.separated(
                       padding: const EdgeInsets.only(top: 12, bottom: 12),
                       scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index){
+                      itemBuilder: (context, index) {
                         if (snapshot.hasData) {
                           return Slidable(
                             endActionPane: ActionPane(
@@ -218,33 +228,38 @@ class _ProfileViewState extends State<ProfileView> {
                                       ? const Color(0xffFEE2E7)
                                       : const Color(0xffE7E5F1),
                                   borderRadius: BorderRadius.circular(15)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    snapshot.data![index].title!.toUpperCase(),
-                                    style: TextStyle(
-                                      letterSpacing: 3,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20,
-                                      color: index % 2 == 0
-                                          ? const Color(0xff783341)
-                                          : const Color(0xff2D2B4E),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      snapshot.data![index].title!
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                        letterSpacing: 4,
+                                        fontSize: 20,
+                                        color: index % 2 == 0
+                                            ? const Color(0xff783341)
+                                            : const Color(0xff2D2B4E),
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    '${snapshot.data![index].link}',
-                                    style: TextStyle(
-                                      color: index % 2 == 0
-                                          ? const Color(0xff9B6A73)
-                                          : const Color(0xff807D99),
+                                    Text(
+                                      '${snapshot.data![index].link}',
+                                      style: TextStyle(
+                                        color: index % 2 == 0
+                                            ? const Color(0xff9B6A73)
+                                            : const Color(0xff807D99),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
                         }
+                        return null;
                       },
                       separatorBuilder: (context, index) {
                         return const SizedBox(
