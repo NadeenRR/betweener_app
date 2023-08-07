@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dart';
-import '../constants.dart';
-import '../controllers/follow_cont.dart';
 import '../controllers/search_cont.dart';
 import '../models/search.dart';
 import 'frindes_view.dart';
@@ -25,8 +23,6 @@ class _SearchViewState extends State<SearchView> {
 
     return searchUsersByName(searchParams);
   }
-
-  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,32 +88,6 @@ class _SearchViewState extends State<SearchView> {
                           );
                         },
                         child: ListTile(
-                          trailing: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                backgroundColor: isPressed
-                                    ? Colors.transparent
-                                    : kSecondaryColor,
-                                side: BorderSide(
-                                  color: !isPressed
-                                      ? Colors.transparent
-                                      : kSecondaryColor,
-                                )),
-                            onPressed: () async {
-                              await addFollower({
-                                'followee_id':
-                                    "${snapshot.data!.user![index].id}"
-                              });
-
-                              setState(() {
-                                isPressed = !isPressed;
-                              });
-                            },
-                            child: const Text(
-                              'Follow',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
                           title: Text(
                             '${snapshot.data!.user![index].name}',
                             style: const TextStyle(

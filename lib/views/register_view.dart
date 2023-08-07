@@ -7,6 +7,7 @@ import 'package:tt9_betweener_challenge/views/widgets/custom_text_form_field.dar
 import 'package:tt9_betweener_challenge/views/widgets/secondary_button_widget.dart';
 
 import '../../views/widgets/google_button_widget.dart';
+import '../constants.dart';
 import '../controllers/auth_cont.dart';
 import '../models/user.dart';
 import 'loading_view.dart';
@@ -63,8 +64,10 @@ class _RegisterViewState extends State<RegisterView> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back_ios),
-          //replace with our own icon data.
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kPrimaryColor,
+          ),
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,

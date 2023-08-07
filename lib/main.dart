@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tt9_betweener_challenge/views/frindes_view.dart';
 import 'package:tt9_betweener_challenge/views/home_view.dart';
 import 'package:tt9_betweener_challenge/views/loading_view.dart';
 import 'package:tt9_betweener_challenge/views/login_view.dart';
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
         ProfileView.id: (context) => const ProfileView(),
         ReceiveView.id: (context) => const ReceiveView(),
         SearchView.id: (context) => const SearchView(),
-        
       },
     );
   }

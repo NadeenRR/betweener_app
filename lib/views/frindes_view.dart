@@ -17,6 +17,38 @@ class FrindesView extends StatefulWidget {
 class _FrindesViewState extends State<FrindesView> {
   Future<Follow>? follow;
 
+  String buttonText = 'Follow';
+  bool isFollowing = false;
+  bool isButtonDisabled = false;
+
+  Future<void> _toggleFollow() async {
+    if (isButtonDisabled) return;
+
+    setState(() {
+      isButtonDisabled = true;
+    });
+
+    try {
+      if (isFollowing) {
+      } else {
+        addFollower({'followee_id': "${widget.userInfo.id}"}).then((value) {
+          setState(() {
+            follow = getFollow(context);
+          });
+        });
+      }
+
+      setState(() {
+        isFollowing = !isFollowing;
+        buttonText = isFollowing ? 'Following' : 'Follow';
+      });
+    } finally {
+      setState(() {
+        isButtonDisabled = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     follow = getFollow(context);
@@ -79,20 +111,26 @@ class _FrindesViewState extends State<FrindesView> {
                     height: 8,
                   ),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kSecondaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            isFollowing ? Colors.transparent : kSecondaryColor,
+                        side: BorderSide(
+                          color: isFollowing
+                              ? kSecondaryColor
+                              : Colors.transparent,
+                          width: 2.0,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      addFollower({'followee_id': "${widget.userInfo.name}"});
-                    },
-                    child: const Text(
-                      'Follow',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  )
+                      onPressed: isButtonDisabled ? null : _toggleFollow,
+                      child: Text(
+                        buttonText,
+                        style: TextStyle(
+                            color: isFollowing ? Colors.white : Colors.black,
+                            fontSize: 14),
+                      )),
                 ],
               )
             ]),
