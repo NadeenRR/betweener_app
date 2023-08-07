@@ -26,6 +26,7 @@ class _ProfileViewState extends State<ProfileView> {
   Future<User>? user;
   Future<List<Links>>? links;
   Future<Follow>? follow;
+
   @override
   void initState() {
     user = getLocalUser();
@@ -145,8 +146,86 @@ class _ProfileViewState extends State<ProfileView> {
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                             ),
-                                            child: Text(
-                                                'followers: ${snapshot.data!.followersCount}'),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                int followersUser = snapshot
+                                                    .data!.followers!.length;
+                                                showModalBottomSheet<dynamic>(
+                                                  context: context,
+                                                  isScrollControlled: true,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.vertical(
+                                                      top:
+                                                          Radius.circular(25.0),
+                                                    ),
+                                                  ),
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.75,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  25.0),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  25.0),
+                                                        ),
+                                                      ),
+                                                      child: Expanded(
+                                                        child:
+                                                            ListView.separated(
+                                                          physics:
+                                                              const BouncingScrollPhysics(),
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return ListTile(
+                                                              title: Text(
+                                                                '${snapshot.data!.followers![index]['name']}',
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                              subtitle: Text(
+                                                                snapshot.data!
+                                                                        .followers![
+                                                                    index]['email'],
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          separatorBuilder:
+                                                              (context,
+                                                                      index) =>
+                                                                  const Divider(
+                                                            color:
+                                                                Colors.black38,
+                                                          ),
+                                                          itemCount:
+                                                              followersUser,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Text(
+                                                  'followers: ${snapshot.data!.followersCount}'),
+                                            ),
                                           ),
                                           const SizedBox(
                                             width: 8,
@@ -158,8 +237,86 @@ class _ProfileViewState extends State<ProfileView> {
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                             ),
-                                            child: Text(
-                                                'following: ${snapshot.data!.followingCount}'),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                int followingUser = snapshot
+                                                    .data!.following!.length;
+                                                showModalBottomSheet<dynamic>(
+                                                  context: context,
+                                                  isScrollControlled: true,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.vertical(
+                                                      top:
+                                                          Radius.circular(25.0),
+                                                    ),
+                                                  ),
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.75,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  25.0),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  25.0),
+                                                        ),
+                                                      ),
+                                                      child: Expanded(
+                                                        child:
+                                                            ListView.separated(
+                                                          physics:
+                                                              const BouncingScrollPhysics(),
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return ListTile(
+                                                              title: Text(
+                                                                '${snapshot.data!.following![index]['name']}',
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                              subtitle: Text(
+                                                                snapshot.data!
+                                                                        .following![
+                                                                    index]['email'],
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          separatorBuilder:
+                                                              (context,
+                                                                      index) =>
+                                                                  const Divider(
+                                                            color:
+                                                                Colors.black38,
+                                                          ),
+                                                          itemCount:
+                                                              followingUser,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Text(
+                                                  'following: ${snapshot.data!.followingCount}'),
+                                            ),
                                           ),
                                         ],
                                       );
