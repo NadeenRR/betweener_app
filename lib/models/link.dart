@@ -40,6 +40,7 @@ class Links {
         "id": id,
         "title": title,
         "Links": link,
+        "link": link,
         "username": username,
         "isActive": isActive,
         "user_id": userId,
